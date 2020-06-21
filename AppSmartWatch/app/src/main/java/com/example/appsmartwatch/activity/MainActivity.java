@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
@@ -21,7 +24,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.appsmartwatch.R;
 import com.example.appsmartwatch.adapter.AdapterLoaiSP;
+import com.example.appsmartwatch.adapter.AdapterSanPham;
 import com.example.appsmartwatch.model.LoaiSP;
+import com.example.appsmartwatch.model.SanPham;
 import com.example.appsmartwatch.ultil.CheckConnect;
 import com.example.appsmartwatch.ultil.Server;
 import com.google.android.material.navigation.NavigationView;
@@ -47,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     int ID = 0;
     String tenloaisp = "";
     String hinhanhloaisp = "";
+    ArrayList<SanPham> arrayListSanPham;
+    AdapterSanPham adapterSanPham;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +65,119 @@ public class MainActivity extends AppCompatActivity {
             actionbar();
             actionviewflipper();
             GetdataLoaiSP();
+            GetdataSPmoinhat();
+            GetdataListView();
         }else{
             CheckConnect.ShowToast_Short(getApplicationContext(),"Check your internet connection");
             finish();
         }
+    }
+
+    private void GetdataListView() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0 :
+                            if(CheckConnect.haveNetworkConnection(getApplicationContext())){
+                                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }else{
+                                CheckConnect.ShowToast_Short(getApplicationContext(),"Check you internet connection");
+                            }
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                            break;
+                    case 1 :
+                            if(CheckConnect.haveNetworkConnection(getApplicationContext())){
+                                Intent intent = new Intent(MainActivity.this,AppleActivity.class);
+                                intent.putExtra("IDloaisanpham",arrayListloaiSP.get(i).getID());
+                                startActivity(intent);
+                            }else{
+                                CheckConnect.ShowToast_Short(getApplicationContext(),"Check you internet connection");
+                            }
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                            break;
+                    case 2 :
+                        if(CheckConnect.haveNetworkConnection(getApplicationContext())){
+                            Intent intent = new Intent(MainActivity.this,SamSungActivity.class);
+                            intent.putExtra("IDloaisanpham",arrayListloaiSP.get(i).getID());
+                            startActivity(intent);
+                        }else{
+                            CheckConnect.ShowToast_Short(getApplicationContext(),"Check you internet connection");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 3 :
+                        if(CheckConnect.haveNetworkConnection(getApplicationContext())){
+                            Intent intent = new Intent(MainActivity.this,HuaweiActivity.class);
+                            intent.putExtra("IDloaisanpham",arrayListloaiSP.get(i).getID());
+                            startActivity(intent);
+                        }else{
+                            CheckConnect.ShowToast_Short(getApplicationContext(),"Check you internet connection");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 4 :
+                        if(CheckConnect.haveNetworkConnection(getApplicationContext())){
+                            Intent intent = new Intent(MainActivity.this,ContactActivity.class);
+                            startActivity(intent);
+                        }else{
+                            CheckConnect.ShowToast_Short(getApplicationContext(),"Check you internet connection");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 5 :
+                        if(CheckConnect.haveNetworkConnection(getApplicationContext())){
+                            Intent intent = new Intent(MainActivity.this,InfomationActivity.class);
+                            startActivity(intent);
+                        }else{
+                            CheckConnect.ShowToast_Short(getApplicationContext(),"Check you internet connection");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                }
+            }
+        });
+    }
+
+    private void GetdataSPmoinhat() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.pathSPmoinhat, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if(response !=null){
+                    int IDsanpham = 0;
+                    String tensanpham = "";
+                    String hinhanh = "";
+                    Integer giasanpham = 0;
+                    String mota = "";
+                    int IDloaisanpham = 0;
+                    for (int i=0;i<response.length();i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            IDsanpham = jsonObject.getInt("IDsanpham");
+                            tensanpham = jsonObject.getString("tensanpham");
+                            hinhanh = jsonObject.getString("hinhanh");
+                            giasanpham = jsonObject.getInt("giasanpham");
+                            mota = jsonObject.getString("mota");
+                            IDloaisanpham = jsonObject.getInt("IDloaisanpham");
+                            arrayListSanPham.add(new SanPham(IDsanpham,tensanpham,hinhanh,giasanpham,mota,IDloaisanpham));
+                            adapterSanPham.notifyDataSetChanged();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void GetdataLoaiSP() {
@@ -78,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                             adapterLoaiSP.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        } 
                     }
                     arrayListloaiSP.add(4, new LoaiSP(0,"Liện Hệ","https://raovat999.com/wp-content/uploads/2019/05/contact-image-icon-14.png"));
                     arrayListloaiSP.add(5, new LoaiSP(0,"Thông Tin","https://www.freeiconspng.com/uploads/information-icon-29.png"));
@@ -136,5 +254,10 @@ public class MainActivity extends AppCompatActivity {
         arrayListloaiSP.add(0,new LoaiSP(0,"Trang Chủ","https://i7.pngguru.com/preview/907/970/515/computer-icons-home-house-home-thumbnail.jpg"));
         adapterLoaiSP = new  AdapterLoaiSP(arrayListloaiSP,getApplicationContext());
         listView.setAdapter(adapterLoaiSP);
+        arrayListSanPham = new ArrayList<>();
+        adapterSanPham = new AdapterSanPham(getApplicationContext(),arrayListSanPham);
+        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        recycler.setAdapter(adapterSanPham);
     }
 }
