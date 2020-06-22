@@ -16,24 +16,24 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class AdapterApple extends BaseAdapter {
+public class AdapterSamsung extends BaseAdapter {
     Context context;
-    ArrayList<SanPham> arrayListApple;
+    ArrayList<SanPham> arrayListSamsung;
 
-    public AdapterApple(Context context, ArrayList<SanPham> arrayListApple) {
+    public AdapterSamsung(Context context, ArrayList<SanPham> arrayListSamsung) {
         this.context = context;
-        this.arrayListApple = arrayListApple;
+        this.arrayListSamsung = arrayListSamsung;
     }
 
     @Override
     //getCount: get ve` so' lg. dong` tran ban?ve~ context
     public int getCount() {
-        return arrayListApple.size();
+        return arrayListSamsung.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return arrayListApple.get(i);
+        return arrayListSamsung.get(i);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class AdapterApple extends BaseAdapter {
         return i;
     }
     public class ViewHolder{
-        public TextView textViewapple,textViewgiaapple,textViewmotaapple;
-        public ImageView imageViewapple;
+        public TextView textviewsamsung,textviewgiasamsung,textviewmotasamsung;
+        public ImageView imageviewsamsung;
     }
 
     @Override
@@ -51,26 +51,26 @@ public class AdapterApple extends BaseAdapter {
         if (view==null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view= inflater.inflate(R.layout.list_apple,null);
-            viewHolder.textViewapple = view.findViewById(R.id.textviewapple);
-            viewHolder.textViewgiaapple = view.findViewById(R.id.textviewgiaapple);
-            viewHolder.textViewmotaapple = view.findViewById(R.id.textviewmotaapple);
-            viewHolder.imageViewapple = view.findViewById(R.id.imageviewapple);
+            view= inflater.inflate(R.layout.list_samsung,null);
+            viewHolder.textviewsamsung = view.findViewById(R.id.textviewsamsung);
+            viewHolder.textviewgiasamsung = view.findViewById(R.id.textviewgiasamsung);
+            viewHolder.textviewmotasamsung = view.findViewById(R.id.textviewmotasamsung);
+            viewHolder.imageviewsamsung = view.findViewById(R.id.imageviewsamsung);
             view.setTag(viewHolder);
         }else {
             viewHolder= (ViewHolder) view.getTag();
         }
         SanPham sanPham = (SanPham) getItem(i);
-        viewHolder.textViewapple.setText(sanPham.getTensanpham());
+        viewHolder.textviewsamsung.setText(sanPham.getTensanpham());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        viewHolder.textViewgiaapple.setText("Giá : " + decimalFormat.format(sanPham.getGiasanpham())+ "₫");
-        viewHolder.textViewmotaapple.setMaxLines(2);
-        viewHolder.textViewmotaapple.setEllipsize(TextUtils.TruncateAt.END);
-        viewHolder.textViewmotaapple.setText(sanPham.getMota());
+        viewHolder.textviewgiasamsung.setText("Giá : " + decimalFormat.format(sanPham.getGiasanpham())+ "₫");
+        viewHolder.textviewmotasamsung.setMaxLines(2);
+        viewHolder.textviewmotasamsung.setEllipsize(TextUtils.TruncateAt.END);
+        viewHolder.textviewmotasamsung.setText(sanPham.getMota());
         Picasso.with(context).load(sanPham.getHinhanh())
                 .placeholder(R.drawable.noimage)
                 .error(R.drawable.error)
-                .into(viewHolder.imageViewapple);
+                .into(viewHolder.imageviewsamsung);
         return view;
     }
 }

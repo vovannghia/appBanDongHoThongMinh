@@ -17,6 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarmanhinhchu"
             android:background="#4665ce"
+            app:titleTextColor="@color/cardview_light_background"
             app:title="TRANG CHỦ"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
@@ -27,24 +28,24 @@
             android:layout_height="200dp">
         </ViewFlipper>
         <LinearLayout
-            android:background="#5992d2"
+            android:background="#4665ce"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#f20"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:text="Sản phẩm mới nhất"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewmanhinhchu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView

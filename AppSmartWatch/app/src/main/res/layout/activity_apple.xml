@@ -7,18 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".activity.AppleActivity">
     <androidx.appcompat.widget.Toolbar
-        android:background="#440FA1"
-        android:titleTextColor="#FFFFFF"
-        android:title="Apple"
+        android:background="#700000"
+        app:titleTextColor="@android:color/background_light"
+        app:title="Đồng hồ thông minh Apple"
         android:id="@+id/toolbarapple"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
     </androidx.appcompat.widget.Toolbar>
-
     <ListView
         android:id="@+id/listviewapple"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>

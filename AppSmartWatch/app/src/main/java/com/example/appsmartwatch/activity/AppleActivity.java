@@ -155,7 +155,7 @@ public class AppleActivity extends AppCompatActivity {
         }
 
     private void getIDloaiSP() {
-        idapple = getIntent().getIntExtra("IDloaisanpham",1);
+        idapple = getIntent().getIntExtra("IDloaisanpham",-1);
         Log.d("giatriloaisanphamapple",idapple+"");
     }
 

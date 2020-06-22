@@ -31,7 +31,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="Tên Sản Phẩm"
-                        android:textColor="#4CAF50"
+                        android:textColor="#000000"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
 
@@ -41,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="Giá Sản Phẩm"
-                        android:textColor="#FF9800"
+                        android:textColor="#FF0000"
                         android:textSize="18dp"/>
 
                     <TextView
