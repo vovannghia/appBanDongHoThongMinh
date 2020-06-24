@@ -39,7 +39,7 @@
                 android:layout_margin="7dp"
                 android:text="Sản phẩm mới nhất"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView

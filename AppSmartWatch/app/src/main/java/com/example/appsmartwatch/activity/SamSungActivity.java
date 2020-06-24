@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -54,10 +58,37 @@ public class SamSungActivity extends AppCompatActivity {
             getIDloaiSP();
             actionToolbar();
             getdata(page);
+            loadmoredata();
         }else{
             CheckConnect.ShowToast_Short(getApplicationContext(),"Check your internet connection");
             finish();
         }
+    }
+    private void loadmoredata() {
+        listViewsamsung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //cau lenh. chuyen? man` hinh`
+                Intent intent = new Intent(getApplicationContext(),DetailProduct.class);
+                intent.putExtra("thongtinsanpham",arrayListsamsung.get(i));
+                startActivity(intent);
+            }
+        });
+        listViewsamsung.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int visibleItem, int totalItem) {
+                if(firstItem + visibleItem == totalItem && totalItem != 0 && loading == false &&limitdata == false){
+                    loading = true;
+                    SamSungActivity.threadData threadData = new SamSungActivity.threadData();
+                    threadData.start();
+                }
+            }
+        });
     }
 
     private void getdata(int Page) {
@@ -93,7 +124,7 @@ public class SamSungActivity extends AppCompatActivity {
                 }else{
                     limitdata = true;
                     listViewsamsung.removeFooterView(FooterView);
-                    CheckConnect.ShowToast_Short(getApplicationContext(),"No more data!!!");
+                    CheckConnect.ShowToast_Short(getApplicationContext(),"No more data");
                 }
             }
         }, new Response.ErrorListener() {
@@ -133,7 +164,11 @@ public class SamSungActivity extends AppCompatActivity {
         arrayListsamsung = new ArrayList<>();
         adapterSamsung = new AdapterSamsung(getApplicationContext(),arrayListsamsung);
         listViewsamsung.setAdapter(adapterSamsung);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        FooterView = inflater.inflate(R.layout.progessbar,null);
+        mhandler = new mhandler();
     }
+    //phan bo? job cho thread
     public class mhandler extends Handler {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -149,6 +184,7 @@ public class SamSungActivity extends AppCompatActivity {
             super.handleMessage(msg);
         }
     }
+    //chia ra nhiu` luong`
     public class threadData extends Thread{
         @Override
         public void run() {

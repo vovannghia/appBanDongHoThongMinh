@@ -1,6 +1,7 @@
 package com.example.appsmartwatch.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appsmartwatch.R;
+import com.example.appsmartwatch.activity.DetailProduct;
 import com.example.appsmartwatch.model.SanPham;
+import com.example.appsmartwatch.ultil.CheckConnect;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -51,6 +54,7 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ItemHold
         return arrayListSanPham.size();
     }
 
+    //bat' gia' tri. tren man` hinh` app
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView imghinhanhsp;
         public TextView txttensp,txtgiasp;
@@ -60,6 +64,16 @@ public class AdapterSanPham extends RecyclerView.Adapter<AdapterSanPham.ItemHold
             imghinhanhsp = itemView.findViewById(R.id.imageviewsanpham);
             txtgiasp = itemView.findViewById(R.id.textviewgiasanpham);
             txttensp = itemView.findViewById(R.id.textviewtensanpham);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailProduct.class);
+                    intent.putExtra("thongtinsanpham",arrayListSanPham.get(getPosition()));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    CheckConnect.ShowToast_Short(context,arrayListSanPham.get(getPosition()).getTensanpham());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

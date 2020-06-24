@@ -82,7 +82,7 @@ public class AppleActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView absListView, int firstItem, int visibleItem, int totalItem) {
-                if(firstItem + visibleItem == totalItem && totalItem != 0 && loading == false &&limitdata == false){
+                if(firstItem + visibleItem == totalItem && totalItem != 0 && loading == false && limitdata == false){
                     loading = true;
                     threadData threadData = new threadData();
                     threadData.start();
@@ -124,7 +124,7 @@ public class AppleActivity extends AppCompatActivity {
                 }else{
                     limitdata = true;
                     listViewapple.removeFooterView(FooterView);
-                    CheckConnect.ShowToast_Short(getApplicationContext(),"No more data!!!");
+                    CheckConnect.ShowToast_Short(getApplicationContext(),"No more data");
                 }
             }
         }, new Response.ErrorListener() {

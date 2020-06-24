@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -53,11 +57,38 @@ public class HuaweiActivity extends AppCompatActivity {
             getIDloaiSP();
             actionToolbar();
             getdata(page);
+            loadmoredata();
         }else{
             CheckConnect.ShowToast_Short(getApplicationContext(),"Check your internet connection");
             finish();
         }
     }
+    private void loadmoredata() {
+        listViewhuawei.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(),DetailProduct.class);
+                intent.putExtra("thongtinsanpham",arrayListhuawei.get(i));
+                startActivity(intent);
+            }
+        });
+        listViewhuawei.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int visibleItem, int totalItem) {
+                if(firstItem + visibleItem == totalItem && totalItem != 0 && loading == false &&limitdata == false){
+                    loading = true;
+                    HuaweiActivity.threadData threadData = new HuaweiActivity.threadData();
+                    threadData.start();
+                }
+            }
+        });
+    }
+
     private void getdata(int Page) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String path = Server.pathapple+String.valueOf(Page);
@@ -71,7 +102,7 @@ public class HuaweiActivity extends AppCompatActivity {
                 String motahuawei="";
                 int IDloaisanphamhuawei=0;
                 if (response!=null && response.length() != 2){
-                    //listViewapple.removeFooterView(FooterView);
+                    listViewhuawei.removeFooterView(FooterView);
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i=0;i<jsonArray.length();i++){
@@ -89,9 +120,9 @@ public class HuaweiActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
-                    //limitdata = true;
-                    //listViewapple.removeFooterView(FooterView);
-                    //CheckConnect.ShowToast_Short(getApplicationContext(),"No more data!!!");
+                    limitdata = true;
+                    listViewhuawei.removeFooterView(FooterView);
+                    CheckConnect.ShowToast_Short(getApplicationContext(),"No more data");
                 }
             }
         }, new Response.ErrorListener() {
@@ -131,6 +162,9 @@ public class HuaweiActivity extends AppCompatActivity {
         arrayListhuawei = new ArrayList<>();
         adapterHuawei = new AdapterHuawei(getApplicationContext(),arrayListhuawei);
         listViewhuawei.setAdapter(adapterHuawei);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        FooterView = inflater.inflate(R.layout.progessbar,null);
+        mhandler = new mhandler();
     }
     public class mhandler extends Handler {
         @Override
