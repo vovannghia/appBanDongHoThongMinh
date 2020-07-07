@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -63,6 +65,21 @@ public class AppleActivity extends AppCompatActivity {
             CheckConnect.ShowToast_Short(getApplicationContext(),"Check your internet connection");
             finish();
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menucart,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menucart:
+                Intent intent = new Intent(getApplicationContext(),CartActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadmoredata() {
@@ -134,7 +151,7 @@ public class AppleActivity extends AppCompatActivity {
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String,String> getParams() throws AuthFailureError {
                 HashMap<String,String> param= new HashMap<String, String>();
                 param.put("IDloaisanpham",String.valueOf(idapple));
                 return param;

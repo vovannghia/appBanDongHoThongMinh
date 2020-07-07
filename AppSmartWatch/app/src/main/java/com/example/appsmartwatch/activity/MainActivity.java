@@ -1,5 +1,6 @@
 package com.example.appsmartwatch.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.appsmartwatch.R;
 import com.example.appsmartwatch.adapter.AdapterLoaiSP;
 import com.example.appsmartwatch.adapter.AdapterSanPham;
+import com.example.appsmartwatch.model.Cart;
 import com.example.appsmartwatch.model.LoaiSP;
 import com.example.appsmartwatch.model.SanPham;
 import com.example.appsmartwatch.ultil.CheckConnect;
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     String hinhanhloaisp = "";
     ArrayList<SanPham> arrayListSanPham;
     AdapterSanPham adapterSanPham;
-
+    public static ArrayList<Cart> cartArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,22 @@ public class MainActivity extends AppCompatActivity {
             CheckConnect.ShowToast_Short(getApplicationContext(),"Check your internet connection");
             finish();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menucart,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menucart:
+                Intent intent = new Intent(getApplicationContext(),CartActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void GetdataListView() {
@@ -259,5 +279,11 @@ public class MainActivity extends AppCompatActivity {
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         recycler.setAdapter(adapterSanPham);
+        //very important
+        if (cartArrayList != null){
+
+        }else{
+            cartArrayList = new ArrayList<>();
+        }
     }
 }

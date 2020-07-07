@@ -26,12 +26,13 @@ public class AdapterApple extends BaseAdapter {
     }
 
     @Override
-    //getCount: get ve` so' lg. dong` tran ban?ve~ context
+    // trả về số dòng của list
     public int getCount() {
         return arrayListApple.size();
     }
 
     @Override
+    //auto dc goi. trong list
     public Object getItem(int i) {
         return arrayListApple.get(i);
     }
@@ -50,6 +51,7 @@ public class AdapterApple extends BaseAdapter {
         ViewHolder viewHolder = null;
         if (view==null){
             viewHolder = new ViewHolder();
+            //LayoutInflater inflater = LayoutInflater.from(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view= inflater.inflate(R.layout.list_apple,null);
             viewHolder.textViewapple = view.findViewById(R.id.textviewapple);

@@ -1,9 +1,13 @@
 package com.example.appsmartwatch.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.appsmartwatch.R;
+import com.example.appsmartwatch.model.Cart;
 import com.example.appsmartwatch.model.SanPham;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +28,12 @@ public class DetailProduct extends AppCompatActivity {
     TextView textViewnameproduct,textViewpriceproduct,textViewdescproduct;
     Spinner spinner;
     Button button;
-    
+    int IDsanpham = 0;
+    String namedetail="";
+    String img ="";
+    int pricedetail=0;
+    String descdetail="";
+    int IDloaisanpham =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +42,56 @@ public class DetailProduct extends AppCompatActivity {
         actiontoolbar();
         getDetailproduct();
         catcheventspinner();
+        eventbutton();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menucart,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menucart:
+                Intent intent = new Intent(getApplicationContext(),CartActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void eventbutton() {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MainActivity.cartArrayList.size() >0){
+                    int quantitys = Integer.parseInt(spinner.getSelectedItem().toString());
+                    boolean exist = false;
+                    for (int i = 0; i< MainActivity.cartArrayList.size(); i++){
+                        if (MainActivity.cartArrayList.get(i).getIdSP() ==IDsanpham){
+                            MainActivity.cartArrayList.get(i).setQuantity(MainActivity.cartArrayList.get(i).getQuantity() + quantitys);
+                            if (MainActivity.cartArrayList.get(i).getQuantity() >=10){
+                                MainActivity.cartArrayList.get(i).setQuantity(10);
+                            }
+                            MainActivity.cartArrayList.get(i).setGiaSP(pricedetail*MainActivity.cartArrayList.get(i).getQuantity());
+                            exist = true;
+                        }
+                    }
+                    if (exist == false){
+                        int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
+                        long newprice = quantity*pricedetail;
+                        MainActivity.cartArrayList.add(new Cart(IDsanpham,namedetail,newprice,img,quantity));
+                    }
+                }else{
+                    int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
+                    long newprice = quantity*pricedetail;
+                    MainActivity.cartArrayList.add(new Cart(IDsanpham,namedetail,newprice,img,quantity));
+                }
+                Intent intent = new Intent(getApplicationContext(),CartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void catcheventspinner() {
@@ -41,12 +101,6 @@ public class DetailProduct extends AppCompatActivity {
     }
 
     private void getDetailproduct() {
-        int IDsanpham = 0;
-        String namedetail="";
-        String img ="";
-        int pricedetail=0;
-        String descdetail="";
-        int IDloaisanpham =0;
         SanPham sanPham = (SanPham) getIntent().getSerializableExtra("thongtinsanpham");
         IDsanpham = sanPham.getIDsanpham();
         namedetail = sanPham.getTensanpham();

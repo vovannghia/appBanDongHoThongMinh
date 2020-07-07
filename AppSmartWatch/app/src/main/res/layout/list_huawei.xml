@@ -44,7 +44,6 @@
                     android:text="Giá Sản Phẩm"
                     android:textColor="#FF0000"
                     android:textSize="18dp"/>
-
                 <TextView
                     android:id="@+id/textviewmotahuawei"
                     android:layout_width="wrap_content"
