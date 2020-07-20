@@ -54,7 +54,6 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"/>
             <Button
-
                 android:focusable="false"
                 android:text="1"
                 android:id="@+id/buttonquantity"

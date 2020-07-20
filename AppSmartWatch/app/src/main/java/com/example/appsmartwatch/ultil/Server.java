@@ -7,4 +7,6 @@ public class Server {
     public static String pathLoaiSP = "http://" + localhost + "/appsmartwatch/getloaiSP.php";
     public static String pathSPmoinhat = "http://" + localhost + "/appsmartwatch/getSPmoinhat.php";
     public static String pathapple = "http://" + localhost + "/appsmartwatch/getSP.php?page=";
+    public static String pathdangnhap = "http://" + localhost + "/appsmartwatch/dangnhap.php";
+    public static String pathdangky = "http://" + localhost + "/appsmartwatch/dangKy.php";
 }

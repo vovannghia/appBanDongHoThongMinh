@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
-                android:gravity="right|center"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
@@ -74,15 +74,17 @@
         </LinearLayout>
     </LinearLayout>
     <Button
-    android:textColor="#00BCD4"
-    android:textSize="20sp"
-    android:text="Check Out"
-    android:id="@+id/buttontop"
-    android:layout_weight="1"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"/>
+        android:background="#3F51B5"
+        android:textColor="#FF5722"
+        android:textSize="20sp"
+        android:text="Check Out"
+        android:id="@+id/buttontop"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
     <Button
-        android:textColor="#00BCD4"
+
+        android:textColor="#FF5722"
         android:textSize="20sp"
         android:text="Continue Shopping"
         android:id="@+id/buttonbottom"

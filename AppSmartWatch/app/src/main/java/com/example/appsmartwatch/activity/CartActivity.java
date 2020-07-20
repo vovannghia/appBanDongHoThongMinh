@@ -3,8 +3,11 @@ package com.example.appsmartwatch.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,7 +21,7 @@ public class CartActivity extends AppCompatActivity {
 
     ListView listViewcart;
     TextView textViewnotif;
-    TextView textViewtotal;
+    static TextView textViewtotal;
     Button buttoncheckout,buttonctnshopping;
     Toolbar toolbarcart;
     AdapterCarts adapterCarts;
@@ -30,9 +33,52 @@ public class CartActivity extends AppCompatActivity {
         actionbar();
         checkdata();
         eventcart();
+        catchonitemevent();
     }
 
-    private void eventcart() {
+    private void catchonitemevent() {
+        listViewcart.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+                builder.setTitle("Confirm Delete Product!!!");
+                builder.setMessage("Are you sure you want to delete this product ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        if (MainActivity.cartArrayList.size()<=0){
+                            textViewnotif.setVisibility(View.VISIBLE);
+                        }else {
+                            MainActivity.cartArrayList.remove(position);
+                            adapterCarts.notifyDataSetChanged();
+                            eventcart();
+                            if (MainActivity.cartArrayList.size()<=0){
+                                textViewnotif.setVisibility(View.VISIBLE);
+                            }else {
+                                textViewnotif.setVisibility(View.INVISIBLE);
+                                adapterCarts.notifyDataSetChanged();
+                                eventcart();
+                            }
+                        }
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        adapterCarts.notifyDataSetChanged();
+                        eventcart();
+                    }
+                });
+                builder.show();
+                return true;
+            }
+        });
+    }
+
+
+
+
+    public static void eventcart() {
         long total = 0;
         for (int i=0;i<MainActivity.cartArrayList.size();i++){
             total +=MainActivity.cartArrayList.get(i).getGiaSP();

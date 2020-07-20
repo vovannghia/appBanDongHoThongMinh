@@ -45,6 +45,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static JSONArray mapKhachHang;
     Toolbar toolbar;
     ViewFlipper viewFlipper;
     RecyclerView recycler;
