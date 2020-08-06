@@ -160,7 +160,7 @@ public class SamSungActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-
+    // điều hướng ừng dụng như nút back
     private void actionToolbar() {
         setSupportActionBar(toolbarsamsung);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -175,7 +175,7 @@ public class SamSungActivity extends AppCompatActivity {
     private void getIDloaiSP() {
         idsamsung = getIntent().getIntExtra("IDloaisanpham",-1);
     }
-
+    // ánh xạ trong android
     private void lienket() {
         toolbarsamsung = findViewById(R.id.toolbarsamsung);
         listViewsamsung = findViewById(R.id.listviewsamsung);

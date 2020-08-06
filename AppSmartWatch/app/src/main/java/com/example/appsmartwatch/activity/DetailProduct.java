@@ -44,13 +44,14 @@ public class DetailProduct extends AppCompatActivity {
         catcheventspinner();
         eventbutton();
     }
-
+    // set icon trên thanh toolbar
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menucart,menu);
         return true;
     }
 
     @Override
+    // bắt nút icon trên màn hình Cart
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menucart:

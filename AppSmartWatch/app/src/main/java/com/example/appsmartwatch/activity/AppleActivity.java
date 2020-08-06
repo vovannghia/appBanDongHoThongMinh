@@ -81,7 +81,7 @@ public class AppleActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    // hàm lấy thêm dữ liệu
     private void loadmoredata() {
         listViewapple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class AppleActivity extends AppCompatActivity {
             }
         });
     }
-
+    // hàm lấy loại sản phẩm
     private void getdata(int Page) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String path = Server.pathapple+String.valueOf(Page);
@@ -175,7 +175,7 @@ public class AppleActivity extends AppCompatActivity {
         idapple = getIntent().getIntExtra("IDloaisanpham",-1);
         Log.d("giatriloaisanphamapple",idapple+"");
     }
-
+    // ánh xạ trong android hay bắt sự kiện trong android
     private void lienket() {
         toolbarapple = findViewById(R.id.toolbarapple);
         listViewapple = findViewById(R.id.listviewapple);

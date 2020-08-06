@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonArrayRequest);
     }
-
+    //ham chạy quảng cáo hay slider
     private void actionviewflipper() {
         ArrayList<String> mangads = new ArrayList<>();
         mangads.add("https://ontimefashion.files.wordpress.com/2019/09/smart-watch-banner.gif?w=332");
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         viewFlipper.setInAnimation(animation_slide_in);
         viewFlipper.setOutAnimation(animation_slide_out);
     }
-
+    // điều hướng ứng dụng như nút back
     private void actionbar(){
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    // ánh xạ hay bắt sự kiện trong android
     private void lienket(){
         toolbar = findViewById(R.id.toolbarmanhinhchu);
         viewFlipper = findViewById(R.id.viewflippermanhinhchu);
